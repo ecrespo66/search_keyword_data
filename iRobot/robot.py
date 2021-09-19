@@ -32,35 +32,40 @@ class Main(Robot):
         #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
         self.keywords =[]
         self.keyword = Keywords(self)
-        self.read_input()
+        if len(self.findQueuesByName("Keyword_data")) is 0:
+            self.queue = self.createQueue("Keyword_data")
+        else:
+            self.queue = self.findQueuesByName("Keyword_data")[0]
 
 
     @Robotmethod
     def cleanup(self):
         """Clean system before executing the robot"""
-        pass
 
 
     @Robotmethod
     def start(self):
         """Init variables, instance objects and start the applications you are going to work with"""
-        pass
+        self.read_input()
+        for keyword in self.keywords:
+            self.queue.createItem({'Keyword': keyword})
+
 
     @Robotmethod
     def process(self):
         """Run robot process"""
-        if len(self.keywords) > 0:
-            k = self.keywords[0]
-            print(k, self.keywords)
+        Qitem = self.queue.getNextItem()
+        if Qitem:
             try:
+                Qitem.setItemAsWorking()
+                k = Qitem.value['Keyword']
                 self.Log.info("Processing : " + k)
-                self.keyword.get_search_data(k)
+                self.keyword.get_search_data(Qitem)
                 self.keyword.get_page_data()
                 self.keyword.store_data()
-                self.keywords.remove(k)
+                Qitem.setItemAsOk()
             except:
                 pass
-
             self.process()
 
 
@@ -70,6 +75,7 @@ class Main(Robot):
         self.browser.close()
 
     def read_input(self):
+        '''Privte method reads Excel sent from Orchestrator'''
         file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'],settings.FILES_PATH)
         self.Log.info(file)
         excel = Excel(file)

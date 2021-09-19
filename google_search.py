@@ -21,7 +21,8 @@ class Keywords:
         df_search_data.to_sql('search_data', conn, if_exists='replace', index=True)
         df_pages_data.to_sql('pages_data', conn, if_exists='replace', index=True)
 
-    def get_search_data(self, keyword):
+    def get_search_data(self, Qitem):
+        keyword = Qitem.value['Keyword']
         self.browser.get("https://google.com")
         self.browser.waitFor("XPATH", "//button[@id='L2AGLb']", 10)
         try:
@@ -35,7 +36,7 @@ class Keywords:
         input.send_keys(Keys.ENTER)
         self.browser.waitFor("XPATH", "//span[@class='sc-bdnylx evNsMB']", seconds=20)
         if self.browser.element_exists("XPATH", "//*[text()='No results found']"):
-            raise robot.BusinessException("No hay resultados", "next", keyword)
+            raise robot.BusinessException("No hay resultados", "next", Qitem)
         else:
             time.sleep(5)
 

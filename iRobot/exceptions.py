@@ -17,7 +17,7 @@ class BusinessException(RobotException):
     def processException(self):
         """Write action when a Business exception occurs"""
         if self.action is "next":
-            self.robotClass.keywords.remove(self.element)
+            self.element.setItemAsFail()
 
 
 class SystemException(RobotException):
