@@ -30,6 +30,7 @@ class Main(Robot):
         self.browser.open()
         self.browser.maximize_window()
         #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
+        self.keywords =[]
         self.keyword = Keywords(self)
         self.read_input()
 
