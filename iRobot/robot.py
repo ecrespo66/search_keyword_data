@@ -72,10 +72,11 @@ class Main(Robot):
     def read_input(self):
         self.Log.debug(self.robotParameters['file-1631430609617'])
         file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'],settings.FILES_PATH)
+        self.Log.info(file)
         excel = Excel(file)
         i=1
         while True:
-            self.keywords.append(excel.readCell("A" + str(i)))
+            self.keywords.append(excel.readCell(f"A{i}"))
             i +=1
 
 

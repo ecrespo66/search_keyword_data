@@ -44,4 +44,5 @@ def saveFileFromOrchestrator(string, f):
     f = open(os.path.join(folder.path, filename), "wb")
     f.write(file)
     f.close()
+    time.sleep(1)
     return os.path.join(folder.path, filename)
