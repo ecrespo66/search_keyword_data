@@ -75,7 +75,7 @@ class Main(Robot):
         excel = Excel(file)
         i=1
         while True:
-            self.keywords.append(excel.readCell(i))
+            self.keywords.append(excel.readCell("A" + str(i)))
             i +=1
 
 
