@@ -70,7 +70,6 @@ class Main(Robot):
         self.browser.close()
 
     def read_input(self):
-        self.Log.debug(self.robotParameters['file-1631430609617'])
         file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'],settings.FILES_PATH)
         self.Log.info(file)
         excel = Excel(file)
@@ -82,7 +81,7 @@ class Main(Robot):
             else:
                 self.keywords.append(data)
             i +=1
-            
+
 
 
 
