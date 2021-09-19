@@ -4,7 +4,7 @@ import string
 import random
 import time
 from iBott.files_activities import Folder
-import robot.settings as settings
+import iRobot.settings as settings
 
 
 def KillProcess(process=None, name=None):
