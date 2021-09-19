@@ -1,4 +1,4 @@
-from iBott import ChromeBrowser
+from iBott import ChromeBrowser, Excel
 from iBott.robot_activities import Robot, Robotmethod, get_all_Methods
 from google_search import Keywords
 from iBott.system_activities import saveFileFromOrchestrator
@@ -29,7 +29,7 @@ class Main(Robot):
             "/Users/enriquecrespodebenito/Documents/telegram/extensions/Keyword-Surfer_v3.1.0.crx")
         self.browser.open()
         self.browser.maximize_window()
-        self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
+        #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
         self.keyword = Keywords(self)
         self.read_input()
 
@@ -70,6 +70,12 @@ class Main(Robot):
 
     def read_input(self):
         self.Log.debug(self.robotParameters['file-1631430609617'])
-        saveFileFromOrchestrator(self.robotParameters['file-1631430609617'])
+        file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'],settings.FILES_PATH)
+        excel = Excel(file)
+        i=1
+        while True:
+            self.keywords.append(excel.readCell(i))
+            i +=1
+
 
 

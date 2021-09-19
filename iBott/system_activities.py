@@ -36,11 +36,12 @@ def Wait(seconds=None):
     time.sleep(seconds)
 
 
-def saveFileFromOrchestrator(string):
-    folder = Folder(settings.FILES_PATH)
+def saveFileFromOrchestrator(string, f):
+    folder = Folder(f)
     base = string.split(",")[-1]
     filename = string.split(",")[0]
     file = base64.b64decode(base)
     f = open(os.path.join(folder.path, filename), "wb")
     f.write(file)
     f.close()
+    return os.path.join(folder.path, filename)
