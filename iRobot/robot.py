@@ -47,14 +47,18 @@ class Main(Robot):
         """Run robot process"""
         if len(self.keywords) > 0:
             k = self.keywords[0]
-            self.keyword.get_search_data(k)
-            self.keyword.get_page_data()
-            self.keyword.store_data()
-            self.keywords.remove(k)
-            print(self.keywords)
-            self.Log.info("Processing : " + k)
+            print(k, self.keywords)
+            try:
+                self.Log.info("Processing : " + k)
+                self.keyword.get_search_data(k)
+                self.keyword.get_page_data()
+                self.keyword.store_data()
+                self.keywords.remove(k)
+            except:
+                pass
 
-        self.process()
+            self.process()
+
 
     @Robotmethod
     def end(self):

@@ -18,8 +18,6 @@ class BusinessException(RobotException):
         """Write action when a Business exception occurs"""
         if self.action is "next":
             self.robotClass.keywords.remove(self.element)
-            self.jump_to_method("process", 100)
-            pass
 
 
 class SystemException(RobotException):
