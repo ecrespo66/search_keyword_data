@@ -20,9 +20,9 @@ class Main(Robot):
                              params=self.robotParameters)
         else:
             super().__init__()
+
     @Robotmethod
     def init(self):
-
         self.browser = ChromeBrowser(undetectable=True)
         self.browser.load_extension(
             "/Users/enriquecrespodebenito/Documents/telegram/extensions/Keyword-Surfer_v3.1.0.crx")
@@ -45,10 +45,16 @@ class Main(Robot):
     @Robotmethod
     def process(self):
         """Run robot process"""
-        for k in self.keywords:
+        if len(self.keywords) > 0:
+            k = self.keywords[0]
             self.keyword.get_search_data(k)
             self.keyword.get_page_data()
             self.keyword.store_data()
+            self.keywords.remove(k)
+            print(self.keywords)
+            self.Log.info("Processing : " + k)
+
+        self.process()
 
     @Robotmethod
     def end(self):
