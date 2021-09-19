@@ -2,7 +2,6 @@ from iBott import ChromeBrowser, Excel
 from iBott.robot_activities import Robot, Robotmethod, get_all_Methods
 from google_search import Keywords
 from iBott.system_activities import saveFileFromOrchestrator
-from iRobot.exceptions import BusinessException, SystemException
 import iRobot.settings as settings
 
 
@@ -25,8 +24,7 @@ class Main(Robot):
     @Robotmethod
     def init(self):
         self.browser = ChromeBrowser(undetectable=True)
-        self.browser.load_extension(
-            "/Users/enriquecrespodebenito/Documents/telegram/extensions/Keyword-Surfer_v3.1.0.crx")
+        self.browser.load_extension(settings.EXTENION_PATH)
         self.browser.open()
         self.browser.maximize_window()
         #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
@@ -76,7 +74,7 @@ class Main(Robot):
 
     def read_input(self):
         '''Privte method reads Excel sent from Orchestrator'''
-        file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'],settings.FILES_PATH)
+        file = saveFileFromOrchestrator(self.robotParameters['file-1631430609617'], settings.FILES_PATH)
         self.Log.info(file)
         excel = Excel(file)
         i=1

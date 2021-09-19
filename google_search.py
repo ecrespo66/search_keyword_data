@@ -1,9 +1,8 @@
 import time
 from selenium.webdriver.common.keys import Keys
-from iBott.browser_activities import ChromeBrowser
 import pandas as pd
 import sqlite3
-from iRobot import robot
+from iRobot import robot, settings
 
 
 class Keywords:
@@ -17,7 +16,7 @@ class Keywords:
         df_search_data = pd.DataFrame(self.search_data)
         df_pages_data = pd.DataFrame(self.pages_data)
 
-        conn = sqlite3.connect('/Users/enriquecrespodebenito/Documents/search_keyword_data/data/db.sqlite3')
+        conn = sqlite3.connect(settings.BD_PATH)
         df_search_data.to_sql('search_data', conn, if_exists='replace', index=True)
         df_pages_data.to_sql('pages_data', conn, if_exists='replace', index=True)
 
@@ -56,7 +55,8 @@ class Keywords:
 
     def getDataTable(self):
         keyword = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
-        similarity = self.browser.find_element_by_xpath("//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']").text
+        similarity = self.browser.find_element_by_xpath(
+            "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']").text
         volume = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
         return {"keyword": keyword, "similarity": similarity, "volume": volume}
 
