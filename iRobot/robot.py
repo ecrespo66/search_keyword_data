@@ -76,8 +76,13 @@ class Main(Robot):
         excel = Excel(file)
         i=1
         while True:
-            self.keywords.append(excel.readCell(f"A{i}"))
+            data = excel.readCell(f"A{i}")
+            if data is None:
+                break
+            else:
+                self.keywords.append(data)
             i +=1
+            
 
 
 
