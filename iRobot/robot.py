@@ -30,6 +30,8 @@ class Main(Robot):
         self.browser.maximize_window()
         self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
         self.keyword = Keywords(self)
+        self.read_input()
+
 
     @Robotmethod
     def cleanup(self):
@@ -64,5 +66,8 @@ class Main(Robot):
     def end(self):
         """Finish robot execution, cleanup environment, close applications and send reports"""
         self.browser.close()
+
+    def read_input(self):
+        print(self.robotParameters['file-1631430609617'])
 
 
