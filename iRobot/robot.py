@@ -1,6 +1,7 @@
 from iBott import ChromeBrowser
 from iBott.robot_activities import Robot, Robotmethod, get_all_Methods
 from google_search import Keywords
+from iBott.system_activities import saveFileFromOrchestrator
 from iRobot.exceptions import BusinessException, SystemException
 import iRobot.settings as settings
 
@@ -68,6 +69,7 @@ class Main(Robot):
         self.browser.close()
 
     def read_input(self):
-        print(self.robotParameters['file-1631430609617'])
+        self.Log.debug(self.robotParameters['file-1631430609617'])
+        saveFileFromOrchestrator(self.robotParameters['file-1631430609617'])
 
 
