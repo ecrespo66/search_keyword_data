@@ -20,8 +20,9 @@ class Keywords:
         df_search_data.to_sql('search_data', conn, if_exists='replace', index=True)
         df_pages_data.to_sql('pages_data', conn, if_exists='replace', index=True)
 
-    def get_search_data(self, Qitem):
+    def get_search_data(self, queue, Qitem):
         keyword = Qitem.value['Keyword']
+        self.queue= queue
         self.browser.get("https://google.com")
         self.browser.waitFor("XPATH", "//button[@id='L2AGLb']", 10)
         try:
@@ -42,8 +43,12 @@ class Keywords:
             arrows[0].click()
             time.sleep(1)
             dataTable = self.getDataTable()
-            for item in dataTable:
-                self.search_data.append(item)
+            for element in dataTable:
+                self.search_data.append(element)
+                for k in self.search_data:
+                    if k['keyword'] != element['keyword']:
+                        self.queue.createItem(element['keyword'])
+
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:

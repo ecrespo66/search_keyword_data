@@ -61,7 +61,7 @@ class Main(Robot):
                 Qitem.setItemAsWorking()
                 k = Qitem.value['Keyword']
                 self.Log.info("Processing : " + k)
-                self.keyword.get_search_data(Qitem)
+                self.keyword.get_search_data(self.queue,Qitem)
                 self.keyword.get_page_data()
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
