@@ -30,10 +30,13 @@ class Main(Robot):
         #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
         self.keywords =[]
         self.keyword = Keywords(self)
-        if len(self.findQueuesByName("Keyword_data")) is 0:
-            self.queue = self.createQueue("Keyword_data")
-        else:
-            self.queue = self.findQueuesByName("Keyword_data")[0]
+        try:
+            if len(self.findQueuesByName("Keyword_data")) is 0:
+                self.queue = self.createQueue("Keyword_data")
+            else:
+                self.queue = self.findQueuesByName("Keyword_data")[0]
+        except:
+            pass
 
 
     @Robotmethod

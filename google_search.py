@@ -38,11 +38,12 @@ class Keywords:
             raise robot.BusinessException("No hay resultados", "next", Qitem)
         else:
             time.sleep(5)
-
             arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
             arrows[0].click()
             time.sleep(1)
-            self.search_data.append(self.getDataTable())
+            dataTable = self.getDataTable()
+            for item in dataTable:
+                self.search_data.append(item)
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -54,11 +55,15 @@ class Keywords:
             time.sleep(1)
 
     def getDataTable(self):
-        keyword = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
-        similarity = self.browser.find_element_by_xpath(
+        data=[]
+        keyword = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
+        similarity = self.browser.find_elements_by_xpath(
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']").text
-        volume = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
-        return {"keyword": keyword, "similarity": similarity, "volume": volume}
+        volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
+        for k,s,v in zip(keyword, similarity, volume):
+            data.append({"keyword": k, "similarity": s, "volume": v})
+        return data
+
 
     def get_page_data(self):
         snippets = self.browser.find_elements_by_xpath("//div[@class='tF2Cxc']")
